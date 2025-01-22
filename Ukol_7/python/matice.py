@@ -18,7 +18,9 @@ def soucet_matic(matice1: List[List[int]], matice2: List[List[int]]) -> Optional
 
 def nasobeni_matic(matice1: List[List[int]], matice2: List[List[int]]) -> Optional[List[List[int]]]:
     """Vynásobí dvě matice, pokud je násobení proveditelné."""
-    if not matice1 or not matice2 or len(matice1[0]) != len(matice2):
+    if not matice1 or not matice2:
+        return []
+    if len(matice1[0]) != len(matice2):
         return None
 
     return [[
@@ -28,6 +30,10 @@ def nasobeni_matic(matice1: List[List[int]], matice2: List[List[int]]) -> Option
 
 def transpozice_matice(matice: List[List[int]]) -> List[List[int]]:
     """Provede transpozici matice."""
+    if not matice:
+        return []
+    if matice == [[]]:
+        return [[]]
     return [list(row) for row in zip(*matice)]
 
 if __name__ == "__main__":
