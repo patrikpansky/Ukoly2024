@@ -19,8 +19,9 @@ std::string caesar_sifra(const std::string& text, int posun, bool sifrovat) {
             char base = islower(c) ? 'a' : 'A';
             int offset = sifrovat ? posun : -posun;
             vysledek += (c - base + offset + 26) % 26 + base;
-        } else {
-            vysledek += c; 
+        }
+        else {
+            vysledek += c;
         }
     }
     return vysledek;
@@ -36,8 +37,9 @@ std::string vigener_sifra(const std::string& text, const std::string& klic, bool
             int offset = sifrovat ? (tolower(klic[j % klic_len]) - 'a') : -(tolower(klic[j % klic_len]) - 'a');
             vysledek += (c - base + offset + 26) % 26 + base;
             j++;
-        } else {
-            vysledek += c; 
+        }
+        else {
+            vysledek += c;
         }
     }
     return vysledek;
@@ -102,4 +104,4 @@ int main() {
 
     return 0;
 }
-#endif  __TEST__
+#endif // __TEST__
