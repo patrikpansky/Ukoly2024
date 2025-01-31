@@ -62,7 +62,7 @@ void deleteAtBeginning(Node** head) {
 void deleteAtEnd(Node** head) {
     if (*head == nullptr) return;
     if ((*head)->next == nullptr) {
-        delete* head;
+        delete *head;
         *head = nullptr;
         return;
     }
