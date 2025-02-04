@@ -1,179 +1,228 @@
 #include <iostream>
 #include <string>
+using namespace std;
 
-struct Node {
+struct Node
+{
+Více
+message.txt
+7 KB
+﻿
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Node
+{
     int data;
     Node* next;
 };
 
-Node* createNode(int data) {
-    Node* newNode = new Node();
-    newNode->data = data;
-    newNode->next = nullptr;
-    return newNode;
+Node* createNode(int data)
+{
+    Node* node = new Node();
+    node->data = data;
+    node->next = nullptr;
+    return node;
+
 }
 
-void insertAtBeginning(Node** head, int data) {
-    Node* newNode = createNode(data);
-    newNode->next = *head;
-    *head = newNode;
+void insertAtBeginning(Node** head, int data)
+{
+    Node* node = createNode(data);
+    node->next = *head;
+    *head = node;
 }
 
-void insertAtEnd(Node** head, const int data) {
-    Node* newNode = createNode(data);
-    if (*head == nullptr) {
-        *head = newNode;
+void insertAtEnd(Node** head, const int data)
+{
+    Node* node = createNode(data);
+    if (*head == nullptr) 
+    {
+        *head = node;
         return;
     }
-    Node* temp = *head;
-    while (temp->next != nullptr) {
-        temp = temp->next;
+    Node* node2 = *head;
+    while (node2->next != nullptr)  
+    {
+        node2 = node2->next;
     }
-    temp->next = newNode;
+    node2->next = node; 
+
 }
 
-void insertAtIndex(Node** head, int data, int index) {
-    if (index == 0) {
+void insertAtIndex(Node** head, int data, int index)
+{
+    if (index == 0)
+    {
         insertAtBeginning(head, data);
         return;
     }
-    Node* newNode = createNode(data);
-    Node* temp = *head;
-    int i = 0;
-    while (temp != nullptr && i < index - 1) {
-        temp = temp->next;
-        i++;
+    Node* node = createNode(data);
+    Node* node2 = *head;
+    for (int i = 0; i < index - 1; i++) 
+    {
+        if (node2 == nullptr) 
+        {
+            insertAtEnd(head, data);
+            return;
+        }
+        node2 = node2->next;
     }
-    if (temp == nullptr) {
-        std::cerr << "Index out of bounds" << std::endl;
+    node->next = node2->next;
+    node2->next = node;
+
+}
+void deleteAtBeginning(Node** head)
+{
+    if (*head == nullptr)
+    {
         return;
     }
-    newNode->next = temp->next;
-    temp->next = newNode;
+    Node* node = *head;
+    *head = node->next;
+    delete node;
 }
-
-void deleteAtBeginning(Node** head) {
-    if (*head == nullptr) return;
-    Node* temp = *head;
-    *head = (*head)->next;
-    delete temp;
-}
-
-void deleteAtEnd(Node** head) {
-    if (*head == nullptr) return;
-    if ((*head)->next == nullptr) {
-        delete *head;
+void deleteAtEnd(Node** head)
+{
+    if (*head == nullptr)
+    {
+        return;
+    }
+    if ((*head)->next == nullptr) 
+    {
+        delete* head;
         *head = nullptr;
         return;
     }
-    Node* temp = *head;
-    while (temp->next->next != nullptr) {
-        temp = temp->next;
+    Node* node = *head;
+    while (node->next->next != nullptr) 
+    {
+        node = node->next;
     }
-    delete temp->next;
-    temp->next = nullptr;
-}
+    delete node->next;
+    node->next = nullptr;
 
-void deleteAtIndex(Node** head, int index) {
-    if (*head == nullptr) return;
-    if (index == 0) {
-        Node* temp = *head;
-        *head = (*head)->next;
-        delete temp;
+}
+void deleteAtIndex(Node* head, int index)
+{
+    if (head == nullptr)    
+    {
         return;
     }
-    Node* temp = *head;
-    int i = 0;
-    while (temp != nullptr && i < index - 1) {
-        temp = temp->next;
-        i++;
-    }
-    if (temp == nullptr || temp->next == nullptr) {
-        std::cerr << "Index out of bounds" << std::endl;
+    Node* node = head;
+    if (index == 0) 
+    {
+        head = node->next;
+        delete node;
         return;
     }
-    Node* nodeToDelete = temp->next;
-    temp->next = temp->next->next;
-    delete nodeToDelete;
+    for (int i = 0; node != nullptr && i < index - 1; i++) 
+    {
+        node = node->next;
+    }
+    if (node == nullptr || node->next == nullptr) 
+    {
+        return;
+    }
+    Node* node2 = node->next->next;
+    delete node->next;
+    node->next = node2;
+
 }
 
-int findFirstOccurrence(Node* head, int value) {
+int findFirstOccurrence(Node* head, int value)
+{
     int index = 0;
-    while (head != nullptr) {
-        if (head->data == value) return index;
-        head = head->next;
+    Node* node = head;
+    while (node != nullptr)
+    {
+        if (node->data == value)
+        {
+            return index;
+        }
+        node = node->next;
         index++;
     }
     return -1;
 }
-
-void sortList(Node** head) {
-    if (*head == nullptr) return;
-    bool swapped;
-    Node* ptr1;
-    Node* lptr = nullptr;
-    do {
-        swapped = false;
-        ptr1 = *head;
-        while (ptr1->next != lptr) {
-            if (ptr1->data > ptr1->next->data) {
-                std::swap(ptr1->data, ptr1->next->data);
-                swapped = true;
-            }
-            ptr1 = ptr1->next;
+void sortList(Node** head)
+{
+    if (*head == nullptr || (*head)->next == nullptr)   
+    {
+        return;
+    }
+    Node* sorted = nullptr;
+    Node* current = *head;
+    while (current != nullptr) 
+    {
+        Node* node = current->next;
+        if (sorted == nullptr || sorted->data >= current->data) 
+        {
+            current->next = sorted;
+            sorted = current;
         }
-        lptr = ptr1;
-    } while (swapped);
+        else 
+        {
+            Node* node2 = sorted;
+            while (node2->next != nullptr && node2->next->data < current->data) 
+            {
+                node2 = node2->next;
+            }
+            current->next = node2->next;
+            node2->next = current;
+        }
+        current = node;
+    }
+    *head = sorted;
 }
 
-void deleteList(Node** head) {
-    Node* current = *head;
-    Node* next = nullptr;
-    while (current != nullptr) {
-        next = current->next;
-        delete current;
-        current = next;
+void deleteList(Node** head)
+{
+    Node* node = *head;
+    while (node != nullptr) // Dokud není prvek nullptr, tak se mazou všechny prvky <- syntax error řešení
+    {
+        Node* node2 = node;
+        node = node->next;
+        delete node2;
     }
     *head = nullptr;
 }
 
-std::ostream& operator<<(std::ostream& os, Node* head) {
-    Node* temp = head;
-    while (temp != nullptr) {
-        os << temp->data;
-        if (temp->next != nullptr) {
-            os << " ";
-        }
-        temp = temp->next;
+ostream& operator<<(ostream& os, Node* head)
+{
+    Node* node = head;
+    while (node != nullptr)
+    {
+        os << node->data << (node->next ? " " : "");
+        node = node->next;
     }
     return os;
 }
 
-#ifndef __TEST__
-int main() {
+#ifndef __TEST__ 
+int main()
+{
     Node* head = nullptr;
     insertAtBeginning(&head, 1);
     insertAtBeginning(&head, 2);
     insertAtEnd(&head, 3);
     insertAtEnd(&head, 4);
     insertAtIndex(&head, 5, 2);
-
-    std::cout << "Seznam po vlozeni prvku: " << head << std::endl;
-    std::cout << "Prvni vyskyt hodnoty 3 je na indexu: " << findFirstOccurrence(head, 3) << std::endl;
-
-    std::cout << "Seznam pred tridenim: " << head << std::endl;
+    cout << "Seznam po vložení prvků: " << head << endl;
+    cout << "První výskyt hodnoty 3 je na indexu: " << findFirstOccurrence(head, 3) << endl;
+    cout << "Seznam před tříděním: " << head << endl;
     sortList(&head);
-    std::cout << "Seznam po trideni: " << head << std::endl;
-
+    cout << "Seznam po třídění: " << head << endl;
     deleteAtBeginning(&head);
     deleteAtEnd(&head);
-    std::cout << "Seznam po smazani prvku: " << head << std::endl;
-
-    deleteAtIndex(&head, 1);
-    std::cout << "Seznam po smazani uzlu na indexu 1: " << head << std::endl;
-
+    cout << "Seznam po smazání prvků: " << head << endl;
+    deleteAtIndex(head, 1);
+    cout << "Seznam po smazání prvků: " << head << endl;
     deleteList(&head);
 
     return 0;
 }
-#endif
+#endif // __TEST__
+message.txt
+7 KB
