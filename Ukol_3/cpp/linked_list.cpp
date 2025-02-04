@@ -4,16 +4,6 @@ using namespace std;
 
 struct Node
 {
-Více
-message.txt
-7 KB
-﻿
-#include <iostream>
-#include <string>
-using namespace std;
-
-struct Node
-{
     int data;
     Node* next;
 };
